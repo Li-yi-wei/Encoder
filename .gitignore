@@ -9,6 +9,7 @@ __pycache__/
 *.pem
 
 *.bin
+plaintext.txt
 
 # Distribution / packaging
 .Python
