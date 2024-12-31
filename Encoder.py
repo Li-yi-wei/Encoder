@@ -1,5 +1,6 @@
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
+#todo decode增加直接傳base64文字的功能
 
 class KeyGenerate:
     def __init__(self, public_exponent = 65537, key_size = 2048):
@@ -39,7 +40,7 @@ class Encoder:
         with open(public_key_file_path, "rb") as public_key_file:
             public_key = serialization.load_pem_public_key(public_key_file.read())
         ciphertext = public_key.encrypt(
-            message,
+            message.encode(),
             padding.OAEP(
                 mgf = padding.MGF1(algorithm = hashes.SHA256()),
                 algorithm = hashes.SHA256(),
@@ -53,9 +54,12 @@ class Encoder:
 
         return ciphertext
 
-    def decode(self, ciphertext, private_key_file_path, save = True):
+    def decode(self, ciphertext_file_path, private_key_file_path, save = True):
         with open(private_key_file_path, "rb") as private_key_file:
-            private_key = serialization.load_pem_private_key(private_key_file)
+            private_key = serialization.load_pem_private_key(private_key_file.read(), password = None)
+
+        with open(ciphertext_file_path, "rb") as ciphertext_file:
+            ciphertext = ciphertext_file.read()
 
             plaintext = private_key.decrypt(
                 ciphertext,
