@@ -1,7 +1,7 @@
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 
-class KeyGenerate():
+class KeyGenerate:
     def __init__(self, public_exponent = 65537, key_size = 2048):
         self.public_exponent = public_exponent
         self.key_size = key_size
@@ -31,7 +31,7 @@ class KeyGenerate():
         with open("public_key.pem", "wb") as public_key_file:
             public_key_file.write(self.public_key_pem)  
 
-class Encoder():
+class Encoder:
     def __init__(self):
         pass
 
