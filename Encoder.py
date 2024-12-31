@@ -37,8 +37,7 @@ class Encoder:
 
     def encode(self, message, public_key_file_path, save = True):
         with open(public_key_file_path, "rb") as public_key_file:
-            public_key = public_key_file.read()
-
+            public_key = serialization.load_pem_public_key(public_key_file.read())
         ciphertext = public_key.encrypt(
             message,
             padding.OAEP(
@@ -56,7 +55,7 @@ class Encoder:
 
     def decode(self, ciphertext, private_key_file_path, save = True):
         with open(private_key_file_path, "rb") as private_key_file:
-            private_key = private_key_file.read()
+            private_key = serialization.load_pem_private_key(private_key_file)
 
             plaintext = private_key.decrypt(
                 ciphertext,
